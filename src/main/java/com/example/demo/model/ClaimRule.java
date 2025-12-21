@@ -10,7 +10,23 @@ public class ClaimRule {
     private Long id;
 
     private String keyword;
-    private double weight;
+    private int weight;
 
-    // getters & setters
+    public ClaimRule() {}
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 }
