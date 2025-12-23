@@ -1,53 +1,28 @@
-package com.example.demo.entity;
+package com.example.demo.service;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Entity
-@Table(name = "evidence")
-public class Evidence {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "claim_id")
-    private DamageClaim claim;
-    
-    private String evidenceType;
-    private String filePath;
-    private String description;
-    private LocalDateTime uploadedAt;
-    
-    @PrePersist
-    protected void onCreate() {
-        uploadedAt = LocalDateTime.now();
+import com.example.demo.entity.Evidence;
+import com.example.demo.repository.EvidenceRepository;
+
+import java.util.List;
+
+@Service
+public class EvidenceServiceImpl {
+
+    private final EvidenceRepository evidenceRepository;
+
+    @Autowired
+    public EvidenceServiceImpl(EvidenceRepository evidenceRepository) {
+        this.evidenceRepository = evidenceRepository;
     }
-    
-    public Evidence() {}
-    
-    public Evidence(DamageClaim claim, String evidenceType, String filePath, String description) {
-        this.claim = claim;
-        this.evidenceType = evidenceType;
-        this.filePath = filePath;
-        this.description = description;
+
+    public Evidence saveEvidence(Evidence evidence) {
+        return evidenceRepository.save(evidence);
     }
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public DamageClaim getClaim() { return claim; }
-    public void setClaim(DamageClaim claim) { this.claim = claim; }
-    
-    public String getEvidenceType() { return evidenceType; }
-    public void setEvidenceType(String evidenceType) { this.evidenceType = evidenceType; }
-    
-    public String getFilePath() { return filePath; }
-    public void setFilePath(String filePath) { this.filePath = filePath; }
-    
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    
-    public LocalDateTime getUploadedAt() { return uploadedAt; }
-    public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
+
+    public List<Evidence> getAllEvidence() {
+        return evidenceRepository.findAll();
+    }
 }
