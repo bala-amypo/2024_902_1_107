@@ -1,20 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.DamageClaim;
-import org.springframework.stereotype.Service;
+import com.example.demo.entity.DamageClaim;
 
-@Service
-public class DamageClaimService {
-
-    public DamageClaim fileClaim(Long parcelId, DamageClaim claim) {
-        return claim;
-    }
-
-    public DamageClaim evaluateClaim(Long claimId) {
-        return null;
-    }
-
-    public DamageClaim getClaim(Long claimId) {
-        return null;
-    }
+public interface DamageClaimService {
+    DamageClaim fileClaim(Long parcelId, DamageClaim claim);
+    DamageClaim evaluateClaim(Long claimId);
+    DamageClaim getClaim(Long claimId);
 }
