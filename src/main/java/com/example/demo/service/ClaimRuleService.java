@@ -1,18 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.ClaimRule;
-import org.springframework.stereotype.Service;
-
+import com.example.demo.entity.ClaimRule;
 import java.util.List;
 
-@Service
-public class ClaimRuleService {
-
-    public ClaimRule addRule(ClaimRule rule) {
-        return rule;
-    }
-
-    public List<ClaimRule> getAllRules() {
-        return List.of();
-    }
+public interface ClaimRuleService {
+    ClaimRule addRule(ClaimRule rule);
+    List<ClaimRule> getAllRules();
 }
