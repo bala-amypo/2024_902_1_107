@@ -15,20 +15,35 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
-    
+
     public AuthController(UserService userService) {
         this.userService = userService;
     }
 
+    // Register API
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         return ResponseEntity.ok(userService.register(user));
     }
 
+    // Login API (NO JWT)
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
+
         User dbUser = userService.findByEmail(user.getEmail());
-        
-        return ResponseEntity.ok(Map.of("token", token));
+
+        if (dbUser == null) {
+            return ResponseEntity.status(401)
+                    .body(Map.of("message", "User not found"));
+        }
+
+        if (!dbUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(401)
+                    .body(Map.of("message", "Invalid password"));
+        }
+
+        return ResponseEntity.ok(
+                Map.of("message", "Login successful")
+        );
     }
 }
