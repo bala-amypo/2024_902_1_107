@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // 🔥 VERY IMPORTANT
+@Service
 public class EvidenceServiceImpl implements EvidenceService {
 
     private final EvidenceClaimRepository evidenceRepository;
@@ -17,12 +17,14 @@ public class EvidenceServiceImpl implements EvidenceService {
     }
 
     @Override
-    public Evidence saveEvidence(Evidence evidence) {
+    public Evidence uploadEvidence(Long claimId, Evidence evidence) {
+        // simple save (claim mapping can be added later)
         return evidenceRepository.save(evidence);
     }
 
     @Override
-    public List<Evidence> getAllEvidence() {
+    public List<Evidence> getEvidenceForClaim(Long claimId) {
+        // temporary: return all evidence
         return evidenceRepository.findAll();
     }
 }
