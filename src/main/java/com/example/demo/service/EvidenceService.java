@@ -4,6 +4,6 @@ import com.example.demo.entity.Evidence;
 import java.util.List;
 
 public interface EvidenceService {
-    Evidence uploadEvidence(Long claimId, Evidence evidence);
-    List<Evidence> getEvidenceForClaim(Long claimId);
+    Evidence saveEvidence(Evidence evidence);
+    List<Evidence> getAllEvidence();
 }

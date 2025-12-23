@@ -1,28 +1,28 @@
-package com.example.demo.service;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.Evidence;
 import com.example.demo.repository.EvidenceClaimRepository;
+import com.example.demo.service.EvidenceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class EvidenceServiceImpl {
+@Service   // 🔥 VERY IMPORTANT
+public class EvidenceServiceImpl implements EvidenceService {
 
-    private final EvidenceClaimRepository evidenceClaimRepository;
+    private final EvidenceClaimRepository evidenceRepository;
 
-    @Autowired
-    public EvidenceServiceImpl(EvidenceClaimRepository evidenceClaimRepository) {
-        this.evidenceClaimRepository = evidenceClaimRepository;
+    public EvidenceServiceImpl(EvidenceClaimRepository evidenceRepository) {
+        this.evidenceRepository = evidenceRepository;
     }
 
+    @Override
     public Evidence saveEvidence(Evidence evidence) {
-        return evidenceClaimRepository.save(evidence);
+        return evidenceRepository.save(evidence);
     }
 
+    @Override
     public List<Evidence> getAllEvidence() {
-        return evidenceClaimRepository.findAll();
+        return evidenceRepository.findAll();
     }
 }
