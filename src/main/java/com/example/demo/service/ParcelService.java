@@ -1,16 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Parcel;
-import org.springframework.stereotype.Service;
+import com.example.demo.entity.Parcel;
 
-@Service
-public class ParcelService {
-
-    public Parcel addParcel(Parcel parcel) {
-        return parcel;
-    }
-
-    public Parcel getByTrackingNumber(String trackingNumber) {
-        return null;
-    }
+public interface ParcelService {
+    Parcel addParcel(Parcel parcel);
+    Parcel getByTrackingNumber(String trackingNumber);
 }
