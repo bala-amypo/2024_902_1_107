@@ -1,49 +1,41 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.User;
+import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
+import java.util.HashMap;
 
 @RestController
-@RequestMapping("/auth")
-@Tag(name = "Authentication")
+@RequestMapping("/api/auth")
+@Tag(name = "Authentication", description = "User authentication endpoints")
 public class AuthController {
-
+    
     private final UserService userService;
-
+    
     public AuthController(UserService userService) {
         this.userService = userService;
     }
-
-    // Register API
+    
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        return ResponseEntity.ok(userService.register(user));
+        User registeredUser = userService.register(user);
+        return ResponseEntity.ok(registeredUser);
     }
-
-    // Login API (NO JWT)
+    
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
-
-        User dbUser = userService.findByEmail(user.getEmail());
-
-        if (dbUser == null) {
-            return ResponseEntity.status(401)
-                    .body(Map.of("message", "User not found"));
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginRequest) {
+        User user = userService.findByEmail(loginRequest.get("email"));
+        
+        if (user.getPassword().equals(loginRequest.get("password"))) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Login successful");
+            response.put("user", user.getEmail());
+            return ResponseEntity.ok(response);
         }
-
-        if (!dbUser.getPassword().equals(user.getPassword())) {
-            return ResponseEntity.status(401)
-                    .body(Map.of("message", "Invalid password"));
-        }
-
-        return ResponseEntity.ok(
-                Map.of("message", "Login successful")
-        );
+        
+        return ResponseEntity.badRequest().build();
     }
 }
