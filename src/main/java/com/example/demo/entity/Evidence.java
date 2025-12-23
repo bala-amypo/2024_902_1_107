@@ -1,28 +1,30 @@
-package com.example.demo.service;
+package com.example.demo.entity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import jakarta.persistence.*;
 
-import com.example.demo.entity.Evidence;
-import com.example.demo.repository.EvidenceRepository;
+@Entity
+public class Evidence {
 
-import java.util.List;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Service
-public class EvidenceServiceImpl {
+    private String description;
 
-    private final EvidenceRepository evidenceRepository;
-
-    @Autowired
-    public EvidenceServiceImpl(EvidenceRepository evidenceRepository) {
-        this.evidenceRepository = evidenceRepository;
+    // getters and setters
+    public Long getId() {
+        return id;
     }
 
-    public Evidence saveEvidence(Evidence evidence) {
-        return evidenceRepository.save(evidence);
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public List<Evidence> getAllEvidence() {
-        return evidenceRepository.findAll();
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

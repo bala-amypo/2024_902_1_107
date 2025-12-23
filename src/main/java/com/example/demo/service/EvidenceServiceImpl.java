@@ -4,25 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Evidence;
-import com.example.demo.repository.EvidenceRepository;
+import com.example.demo.repository.EvidenceClaimRepository;
 
 import java.util.List;
 
 @Service
 public class EvidenceServiceImpl {
 
-    private final EvidenceRepository evidenceRepository;
+    private final EvidenceClaimRepository evidenceClaimRepository;
 
     @Autowired
-    public EvidenceServiceImpl(EvidenceRepository evidenceRepository) {
-        this.evidenceRepository = evidenceRepository;
+    public EvidenceServiceImpl(EvidenceClaimRepository evidenceClaimRepository) {
+        this.evidenceClaimRepository = evidenceClaimRepository;
     }
 
     public Evidence saveEvidence(Evidence evidence) {
-        return evidenceRepository.save(evidence);
+        return evidenceClaimRepository.save(evidence);
     }
 
     public List<Evidence> getAllEvidence() {
-        return evidenceRepository.findAll();
+        return evidenceClaimRepository.findAll();
     }
 }
