@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Evidence;
 
 @Repository
-public interface EvidenceClaimRepository extends JpaRepository<Evidence, Long> {
+public interface EvidenceClaimRepository 
+        extends JpaRepository<Evidence, Long> {
 }
+
