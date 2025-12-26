@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 
@@ -14,19 +14,27 @@ public class ClaimRule {
 
     public ClaimRule() {}
 
-    public ClaimRule(Long id, String keyword, double weight) {
-        this.id = id;
-        this.keyword = keyword;
-        this.weight = weight;
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
+    public String getKeyword() {
+        return keyword;
+    }
 
-    public String getKeyword() { return keyword; }
+    public double getWeight() {
+        return weight;
+    }
 
-    public double getWeight() { return weight; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setKeyword(String keyword) { this.keyword = keyword; }
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
-    public void setWeight(double weight) { this.weight = weight; }
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 }

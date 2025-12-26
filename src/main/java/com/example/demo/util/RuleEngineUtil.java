@@ -1,23 +1,18 @@
 package com.example.demo.util;
 
-import com.example.demo.entity.ClaimRule;
+import com.example.demo.model.ClaimRule;
 import java.util.List;
 
 public class RuleEngineUtil {
 
-    public static double computeScore(String description, List<ClaimRule> rules) {
-
-        if (description == null || rules == null) return 0.0;
-
-        double score = 0.0;
-        String text = description.toLowerCase();
+    public static double evaluateScore(String text, List<ClaimRule> rules) {
+        double score = 0;
 
         for (ClaimRule rule : rules) {
-            if (rule.getKeyword() != null &&
-                text.contains(rule.getKeyword().toLowerCase())) {
+            if (text != null && text.contains(rule.getKeyword())) {
                 score += rule.getWeight();
             }
         }
-        return Math.min(score, 1.0);
+        return score;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -13,55 +13,41 @@ public class DamageClaim {
 
     private String claimDescription;
     private double score;
-    private String status;
 
-    @ManyToOne
-    private Parcel parcel;
-
-    @ManyToMany
-    private List<ClaimRule> appliedRules = new ArrayList<>();
+    @ElementCollection
+    private List<String> appliedRules = new ArrayList<>();
 
     public DamageClaim() {}
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
     public String getClaimDescription() {
         return claimDescription;
-    }
-
-    public void setClaimDescription(String claimDescription) {
-        this.claimDescription = claimDescription;
     }
 
     public double getScore() {
         return score;
     }
 
+    public List<String> getAppliedRules() {
+        return appliedRules;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setClaimDescription(String claimDescription) {
+        this.claimDescription = claimDescription;
+    }
+
     public void setScore(double score) {
         this.score = score;
     }
 
-    public List<ClaimRule> getAppliedRules() {
-        return appliedRules;
-    }
-
-    public void setAppliedRules(List<ClaimRule> appliedRules) {
+    public void setAppliedRules(List<String> appliedRules) {
         this.appliedRules = appliedRules;
-    }
-
-    public Parcel getParcel() {
-        return parcel;
-    }
-
-    public void setParcel(Parcel parcel) {
-        this.parcel = parcel;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
