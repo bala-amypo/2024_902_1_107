@@ -1,37 +1,33 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.DamageClaim;
+import com.example.demo.model.DamageClaim;
 import com.example.demo.service.DamageClaimService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/claims")
-@Tag(name = "Damage Claims", description = "Damage claim management endpoints")
+@RequestMapping("/claims")
 public class DamageClaimController {
-    
-    private final DamageClaimService damageClaimService;
-    
-    public DamageClaimController(DamageClaimService damageClaimService) {
-        this.damageClaimService = damageClaimService;
+
+    private final DamageClaimService claimService;
+
+    public DamageClaimController(DamageClaimService claimService) {
+        this.claimService = claimService;
     }
-    
+
     @PostMapping("/file/{parcelId}")
-    public ResponseEntity<DamageClaim> fileClaim(@PathVariable Long parcelId, @RequestBody DamageClaim claim) {
-        DamageClaim filedClaim = damageClaimService.fileClaim(parcelId, claim);
-        return ResponseEntity.ok(filedClaim);
+    public DamageClaim fileClaim(@PathVariable Long parcelId,
+                                 @RequestBody DamageClaim claim) {
+        return claimService.fileClaim(parcelId, claim);
     }
-    
+
     @PutMapping("/evaluate/{claimId}")
-    public ResponseEntity<DamageClaim> evaluateClaim(@PathVariable Long claimId) {
-        DamageClaim evaluatedClaim = damageClaimService.evaluateClaim(claimId);
-        return ResponseEntity.ok(evaluatedClaim);
+    public DamageClaim evaluate(@PathVariable Long claimId) {
+        return claimService.evaluateClaim(claimId);
     }
-    
+
     @GetMapping("/{claimId}")
-    public ResponseEntity<DamageClaim> getClaim(@PathVariable Long claimId) {
-        DamageClaim claim = damageClaimService.getClaim(claimId);
-        return ResponseEntity.ok(claim);
+    public DamageClaim getClaim(@PathVariable Long claimId) {
+        return claimService.getClaim(claimId);
     }
 }
