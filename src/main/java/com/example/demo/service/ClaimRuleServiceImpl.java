@@ -1,31 +1,22 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-import com.example.demo.entity.ClaimRule;
 import com.example.demo.exception.BadRequestException;
+import com.example.demo.model.ClaimRule;
 import com.example.demo.repository.ClaimRuleRepository;
-import org.springframework.stereotype.Service;
-import java.util.List;
+import com.example.demo.service.ClaimRuleService;
 
-@Service
 public class ClaimRuleServiceImpl implements ClaimRuleService {
-    
-    private final ClaimRuleRepository claimRuleRepository;
-    
-    public ClaimRuleServiceImpl(ClaimRuleRepository claimRuleRepository) {
-        this.claimRuleRepository = claimRuleRepository;
+
+    private final ClaimRuleRepository repo;
+
+    public ClaimRuleServiceImpl(ClaimRuleRepository repo) {
+        this.repo = repo;
     }
-    
-    @Override
-    public ClaimRule addRule(ClaimRule rule) {
-        if (rule.getWeight() <= 0) {
-            throw new BadRequestException("Weight must be positive");
+
+    public ClaimRule save(ClaimRule rule) {
+        if (rule.getWeight() < 0) {
+            throw new BadRequestException("weight >= 0");
         }
-        
-        return claimRuleRepository.save(rule);
-    }
-    
-    @Override
-    public List<ClaimRule> getAllRules() {
-        return claimRuleRepository.findAll();
+        return repo.save(rule);
     }
 }

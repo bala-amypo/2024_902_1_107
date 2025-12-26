@@ -1,30 +1,19 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Evidence;
-import com.example.demo.repository.EvidenceClaimRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.EvidenceService;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Service
 public class EvidenceServiceImpl implements EvidenceService {
 
-    private final EvidenceClaimRepository evidenceRepository;
+    private final EvidenceRepository evidenceRepo;
+    private final DamageClaimRepository claimRepo;
 
-    public EvidenceServiceImpl(EvidenceClaimRepository evidenceRepository) {
-        this.evidenceRepository = evidenceRepository;
+    public EvidenceServiceImpl(EvidenceRepository e, DamageClaimRepository c) {
+        this.evidenceRepo = e;
+        this.claimRepo = c;
     }
 
-    @Override
-    public Evidence uploadEvidence(Long claimId, Evidence evidence) {
-        // simple save (claim mapping can be added later)
-        return evidenceRepository.save(evidence);
-    }
-
-    @Override
-    public List<Evidence> getEvidenceForClaim(Long claimId) {
-        // temporary: return all evidence
-        return evidenceRepository.findAll();
+    public long count(Long claimId) {
+        return evidenceRepo.countByClaim_Id(claimId);
     }
 }
