@@ -17,14 +17,20 @@ public class EvidenceController {
         this.evidenceService = evidenceService;
     }
 
-    @PostMapping("/upload/{claimId}")
-    public Evidence upload(@PathVariable Long claimId,
-                           @RequestBody Evidence evidence) {
-        return evidenceService.uploadEvidence(claimId, evidence);
+    // ================= ADD EVIDENCE =================
+    @PostMapping("/{claimId}")
+    public Evidence addEvidence(
+            @PathVariable Long claimId,
+            @RequestBody Evidence evidence) {
+
+        return evidenceService.addEvidence(claimId, evidence);
     }
 
-    @GetMapping("/claim/{claimId}")
-    public List<Evidence> getForClaim(@PathVariable Long claimId) {
-        return evidenceService.getEvidenceForClaim(claimId);
+    // ================= GET EVIDENCE BY CLAIM =================
+    @GetMapping("/{claimId}")
+    public List<Evidence> getEvidenceByClaim(
+            @PathVariable Long claimId) {
+
+        return evidenceService.getEvidenceByClaim(claimId);
     }
 }
