@@ -32,8 +32,7 @@ public class AuthController {
     // ================= REGISTER =================
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        User savedUser = userService.register(user);
-        return ResponseEntity.ok(savedUser);
+        return ResponseEntity.ok(userService.register(user));
     }
 
     // ================= LOGIN =================
@@ -49,7 +48,14 @@ public class AuthController {
                             )
                     );
 
-            String token = jwtUtil.generateToken(authentication.getName());
+            User dbUser = userService.findByEmail(user.getEmail());
+
+            String token = jwtUtil.generateToken(
+                    dbUser.getId(),
+                    dbUser.getEmail(),
+                    dbUser.getRole()
+            );
+
             return ResponseEntity.ok(token);
 
         } catch (AuthenticationException e) {
