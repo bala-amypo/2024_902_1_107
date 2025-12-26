@@ -5,6 +5,8 @@ import com.example.demo.service.ParcelService;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/parcels")
 public class ParcelController {
@@ -15,13 +17,21 @@ public class ParcelController {
         this.parcelService = parcelService;
     }
 
+    // ================= CREATE PARCEL =================
     @PostMapping
-    public Parcel addParcel(@RequestBody Parcel parcel) {
-        return parcelService.addParcel(parcel);
+    public Parcel createParcel(@RequestBody Parcel parcel) {
+        return parcelService.createParcel(parcel);
     }
 
-    @GetMapping("/tracking/{trackingNumber}")
-    public Parcel getByTracking(@PathVariable String trackingNumber) {
-        return parcelService.getByTrackingNumber(trackingNumber);
+    // ================= GET PARCEL BY ID =================
+    @GetMapping("/{id}")
+    public Parcel getParcel(@PathVariable Long id) {
+        return parcelService.getParcel(id);
+    }
+
+    // ================= GET ALL PARCELS =================
+    @GetMapping
+    public List<Parcel> getAllParcels() {
+        return parcelService.getAllParcels();
     }
 }
