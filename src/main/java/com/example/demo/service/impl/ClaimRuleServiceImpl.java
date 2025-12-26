@@ -1,33 +1,36 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.ClaimRule;
 import com.example.demo.repository.ClaimRuleRepository;
 import com.example.demo.service.ClaimRuleService;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class ClaimRuleServiceImpl implements ClaimRuleService {
 
-    private final ClaimRuleRepository ruleRepository;
+    private final ClaimRuleRepository claimRuleRepository;
 
-    // REQUIRED constructor
-    public ClaimRuleServiceImpl(ClaimRuleRepository ruleRepository) {
-        this.ruleRepository = ruleRepository;
+    public ClaimRuleServiceImpl(ClaimRuleRepository claimRuleRepository) {
+        this.claimRuleRepository = claimRuleRepository;
     }
 
     @Override
-    public ClaimRule addRule(ClaimRule rule) {
+    public ClaimRule createRule(ClaimRule rule) {
+        return claimRuleRepository.save(rule);
+    }
 
-        if (rule.getWeight() < 0) {
-            throw new BadRequestException(">=");
-        }
-
-        return ruleRepository.save(rule);
+    @Override
+    public ClaimRule getRule(Long id) {
+        return claimRuleRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("ClaimRule not found"));
     }
 
     @Override
     public List<ClaimRule> getAllRules() {
-        return ruleRepository.findAll();
+        return claimRuleRepository.findAll();
     }
 }
