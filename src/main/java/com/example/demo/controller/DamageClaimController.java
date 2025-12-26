@@ -5,6 +5,8 @@ import com.example.demo.service.DamageClaimService;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/claims")
 public class DamageClaimController {
@@ -15,19 +17,24 @@ public class DamageClaimController {
         this.claimService = claimService;
     }
 
+    // ================= FILE A CLAIM =================
     @PostMapping("/file/{parcelId}")
-    public DamageClaim fileClaim(@PathVariable Long parcelId,
-                                 @RequestBody DamageClaim claim) {
-        return claimService.fileClaim(parcelId, claim);
+    public DamageClaim fileClaim(
+            @PathVariable Long parcelId,
+            @RequestBody DamageClaim claim) {
+
+        return claimService.createClaim(parcelId, claim);
     }
 
-    @PutMapping("/evaluate/{claimId}")
-    public DamageClaim evaluate(@PathVariable Long claimId) {
-        return claimService.evaluateClaim(claimId);
+    // ================= GET CLAIM BY ID =================
+    @GetMapping("/{id}")
+    public DamageClaim getClaim(@PathVariable Long id) {
+        return claimService.getClaim(id);
     }
 
-    @GetMapping("/{claimId}")
-    public DamageClaim getClaim(@PathVariable Long claimId) {
-        return claimService.getClaim(claimId);
+    // ================= GET ALL CLAIMS =================
+    @GetMapping
+    public List<DamageClaim> getAllClaims() {
+        return claimService.getAllClaims();
     }
 }

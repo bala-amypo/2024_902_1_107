@@ -31,31 +31,26 @@ public class DamageClaimServiceImpl implements DamageClaimService {
         this.claimRuleRepository = claimRuleRepository;
     }
 
-    // ================= CREATE DAMAGE CLAIM =================
+    // ================= CREATE CLAIM =================
     @Override
     public DamageClaim createClaim(Long parcelId, DamageClaim claim) {
 
         Parcel parcel = parcelRepository.findById(parcelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parcel not found"));
 
-        // Attach parcel and set initial status
         claim.setParcel(parcel);
         claim.setStatus("PENDING");
 
-        // Fetch all claim rules
         List<ClaimRule> rules = claimRuleRepository.findAll();
 
-        // Compute score using rule engine
         double score = RuleEngineUtil.computeScore(
                 claim.getClaimDescription(), rules);
 
         claim.setScore(score);
 
-        // Store applied rule keywords
         rules.forEach(rule ->
                 claim.getAppliedRules().add(rule.getKeyword()));
 
-        // Update status based on score
         if (score > 5) {
             claim.setStatus("APPROVED");
         } else {
@@ -67,7 +62,7 @@ public class DamageClaimServiceImpl implements DamageClaimService {
 
     // ================= GET CLAIM BY ID =================
     @Override
-    public DamageClaim getClaimById(Long id) {
+    public DamageClaim getClaim(Long id) {
         return damageClaimRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Damage claim not found"));
     }
