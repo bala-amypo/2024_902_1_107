@@ -1,5 +1,12 @@
 package com.example.demo.service;
 
-public interface EvidenceService {
-    long count(Long claimId);
+import com.example.demo.model.ClaimRule;
+
+import java.util.List;
+
+public interface ClaimRuleService {
+
+    ClaimRule addRule(ClaimRule rule);
+
+    List<ClaimRule> getAllRules();
 }
