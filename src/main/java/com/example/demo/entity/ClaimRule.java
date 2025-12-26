@@ -1,30 +1,25 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "claim_rules")
 public class ClaimRule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String keyword;
-    private Double weight;
-    
+
+    private double weight;
+
     public ClaimRule() {}
-    
-    public ClaimRule(String keyword, Double weight) {
-        this.keyword = keyword;
+
+    public ClaimRule(double weight) {
         this.weight = weight;
     }
-    
+
     public Long getId() { return id; }
+    public double getWeight() { return weight; }
+
     public void setId(Long id) { this.id = id; }
-    
-    public String getKeyword() { return keyword; }
-    public void setKeyword(String keyword) { this.keyword = keyword; }
-    
-    public Double getWeight() { return weight; }
-    public void setWeight(Double weight) { this.weight = weight; }
+    public void setWeight(double weight) { this.weight = weight; }
 }

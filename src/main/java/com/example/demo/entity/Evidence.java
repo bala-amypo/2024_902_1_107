@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 
@@ -9,22 +9,18 @@ public class Evidence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String description;
+    @ManyToOne
+    private DamageClaim claim;
 
-    // getters and setters
-    public Long getId() {
-        return id;
+    public Evidence() {}
+
+    public Evidence(DamageClaim claim) {
+        this.claim = claim;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getId() { return id; }
+    public DamageClaim getClaim() { return claim; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setClaim(DamageClaim claim) { this.claim = claim; }
 }

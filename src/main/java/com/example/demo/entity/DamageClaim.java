@@ -1,63 +1,31 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "damage_claims")
 public class DamageClaim {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
-    @JoinColumn(name = "parcel_id")
     private Parcel parcel;
-    
-    private String claimDescription;
-    private LocalDateTime filedAt;
-    private String status = "PENDING";
-    private Double score;
-    
-    @ManyToMany
-    @JoinTable(
-        name = "claim_applied_rules",
-        joinColumns = @JoinColumn(name = "claim_id"),
-        inverseJoinColumns = @JoinColumn(name = "rule_id")
-    )
-    private List<ClaimRule> appliedRules;
-    
-    @PrePersist
-    protected void onCreate() {
-        filedAt = LocalDateTime.now();
-    }
-    
+
+    private double amount;
+
     public DamageClaim() {}
-    
-    public DamageClaim(Parcel parcel, String claimDescription) {
+
+    public DamageClaim(Parcel parcel, double amount) {
         this.parcel = parcel;
-        this.claimDescription = claimDescription;
+        this.amount = amount;
     }
-    
+
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
     public Parcel getParcel() { return parcel; }
+    public double getAmount() { return amount; }
+
+    public void setId(Long id) { this.id = id; }
     public void setParcel(Parcel parcel) { this.parcel = parcel; }
-    
-    public String getClaimDescription() { return claimDescription; }
-    public void setClaimDescription(String claimDescription) { this.claimDescription = claimDescription; }
-    
-    public LocalDateTime getFiledAt() { return filedAt; }
-    public void setFiledAt(LocalDateTime filedAt) { this.filedAt = filedAt; }
-    
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-    
-    public Double getScore() { return score; }
-    public void setScore(Double score) { this.score = score; }
-    
-    public List<ClaimRule> getAppliedRules() { return appliedRules; }
-    public void setAppliedRules(List<ClaimRule> appliedRules) { this.appliedRules = appliedRules; }
+    public void setAmount(double amount) { this.amount = amount; }
 }
