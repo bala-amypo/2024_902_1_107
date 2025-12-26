@@ -1,65 +1,33 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "evidence")
-public class EvidenceEntity {
+public class Evidence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fileName;
+
     @ManyToOne
-    private DamageClaimEntity claim;
+    private DamageClaim claim;
 
-    private String evidenceType;
+    public Evidence() {}
 
-    private String fileUrl;
-
-    private LocalDateTime uploadedAt;
-
-    // Default constructor
-    public EvidenceEntity() {
-    }
-
-    // Auto timestamp
-    @PrePersist
-    public void onUpload() {
-        this.uploadedAt = LocalDateTime.now();
-    }
-
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
-
-    public DamageClaimEntity getClaim() {
-        return claim;
-    }
-
-    public void setClaim(DamageClaimEntity claim) {
+    public Evidence(Long id, String fileName, DamageClaim claim) {
+        this.id = id;
+        this.fileName = fileName;
         this.claim = claim;
     }
 
-    public String getEvidenceType() {
-        return evidenceType;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setEvidenceType(String evidenceType) {
-        this.evidenceType = evidenceType;
-    }
+    public String getFileName() { return fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
 
-    public String getFileUrl() {
-        return fileUrl;
-    }
-
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
-    }
-
-    public LocalDateTime getUploadedAt() {
-        return uploadedAt;
-    }
+    public DamageClaim getClaim() { return claim; }
+    public void setClaim(DamageClaim claim) { this.claim = claim; }
 }

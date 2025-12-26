@@ -1,58 +1,31 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "claim_rules")
-public class ClaimRuleEntity {
+public class ClaimRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String ruleName;
+    private String condition;
 
-    private String conditionExpression;
+    public ClaimRule() {}
 
-    private Double weight;
-
-    // Default constructor
-    public ClaimRuleEntity() {
-    }
-
-    // Parameterized constructor
-    public ClaimRuleEntity(String ruleName, String conditionExpression, Double weight) {
+    public ClaimRule(Long id, String ruleName, String condition) {
+        this.id = id;
         this.ruleName = ruleName;
-        this.conditionExpression = conditionExpression;
-        this.weight = weight;
+        this.condition = condition;
     }
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getRuleName() {
-        return ruleName;
-    }
+    public String getRuleName() { return ruleName; }
+    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
 
-    public void setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-    }
-
-    public String getConditionExpression() {
-        return conditionExpression;
-    }
-
-    public void setConditionExpression(String conditionExpression) {
-        this.conditionExpression = conditionExpression;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
+    public String getCondition() { return condition; }
+    public void setCondition(String condition) { this.condition = condition; }
 }
