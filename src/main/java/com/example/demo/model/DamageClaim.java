@@ -1,6 +1,8 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class DamageClaim {
@@ -9,30 +11,57 @@ public class DamageClaim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String description;
+    private String claimDescription;
+    private double score;
     private String status;
 
     @ManyToOne
     private Parcel parcel;
 
+    @ManyToMany
+    private List<ClaimRule> appliedRules = new ArrayList<>();
+
     public DamageClaim() {}
 
-    public DamageClaim(Long id, String description, String status, Parcel parcel) {
-        this.id = id;
-        this.description = description;
-        this.status = status;
+    public Long getId() { return id; }
+
+    public String getClaimDescription() {
+        return claimDescription;
+    }
+
+    public void setClaimDescription(String claimDescription) {
+        this.claimDescription = claimDescription;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public List<ClaimRule> getAppliedRules() {
+        return appliedRules;
+    }
+
+    public void setAppliedRules(List<ClaimRule> appliedRules) {
+        this.appliedRules = appliedRules;
+    }
+
+    public Parcel getParcel() {
+        return parcel;
+    }
+
+    public void setParcel(Parcel parcel) {
         this.parcel = parcel;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getStatus() {
+        return status;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public Parcel getParcel() { return parcel; }
-    public void setParcel(Parcel parcel) { this.parcel = parcel; }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

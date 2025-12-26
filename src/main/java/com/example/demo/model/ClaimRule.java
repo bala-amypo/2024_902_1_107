@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
@@ -9,23 +9,24 @@ public class ClaimRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String ruleName;
-    private String condition;
+    private String keyword;
+    private double weight;
 
     public ClaimRule() {}
 
-    public ClaimRule(Long id, String ruleName, String condition) {
+    public ClaimRule(Long id, String keyword, double weight) {
         this.id = id;
-        this.ruleName = ruleName;
-        this.condition = condition;
+        this.keyword = keyword;
+        this.weight = weight;
     }
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public String getRuleName() { return ruleName; }
-    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+    public String getKeyword() { return keyword; }
 
-    public String getCondition() { return condition; }
-    public void setCondition(String condition) { this.condition = condition; }
+    public double getWeight() { return weight; }
+
+    public void setKeyword(String keyword) { this.keyword = keyword; }
+
+    public void setWeight(double weight) { this.weight = weight; }
 }
