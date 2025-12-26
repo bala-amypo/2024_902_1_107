@@ -5,11 +5,15 @@ import java.util.List;
 
 public class RuleEngineUtil {
 
-    public static double evaluateScore(String text, List<ClaimRule> rules) {
-        double score = 0;
+    public static double computeScore(String text, List<ClaimRule> rules) {
+        double score = 0.0;
+
+        if (text == null || rules == null) {
+            return score;
+        }
 
         for (ClaimRule rule : rules) {
-            if (text != null && text.contains(rule.getKeyword())) {
+            if (text.contains(rule.getKeyword())) {
                 score += rule.getWeight();
             }
         }

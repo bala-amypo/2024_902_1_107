@@ -12,13 +12,20 @@ public class DamageClaim {
     private Long id;
 
     private String claimDescription;
+
     private double score;
+
+    private String status;
+
+    @ManyToOne
+    private Parcel parcel;
 
     @ElementCollection
     private List<String> appliedRules = new ArrayList<>();
 
     public DamageClaim() {}
 
+    // ===== GETTERS =====
     public Long getId() {
         return id;
     }
@@ -31,10 +38,19 @@ public class DamageClaim {
         return score;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public Parcel getParcel() {
+        return parcel;
+    }
+
     public List<String> getAppliedRules() {
         return appliedRules;
     }
 
+    // ===== SETTERS =====
     public void setId(Long id) {
         this.id = id;
     }
@@ -45,6 +61,14 @@ public class DamageClaim {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setParcel(Parcel parcel) {
+        this.parcel = parcel;
     }
 
     public void setAppliedRules(List<String> appliedRules) {
