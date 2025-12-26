@@ -18,7 +18,7 @@ public class ClaimRuleServiceImpl implements ClaimRuleService {
     }
 
     @Override
-    public ClaimRule createRule(ClaimRule rule) {
+    public ClaimRule addRule(ClaimRule rule) {
         return claimRuleRepository.save(rule);
     }
 
@@ -26,7 +26,7 @@ public class ClaimRuleServiceImpl implements ClaimRuleService {
     public ClaimRule getRule(Long id) {
         return claimRuleRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("ClaimRule not found"));
+                        new RuntimeException("ClaimRule not found with id " + id));
     }
 
     @Override
