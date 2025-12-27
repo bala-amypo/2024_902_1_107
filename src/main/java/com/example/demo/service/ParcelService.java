@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Parcel;
+import java.util.List;
 
 public interface ParcelService {
 
-    Parcel addParcel(Parcel parcel);
+    Parcel createParcel(Parcel parcel);
 
-    Parcel getByTrackingNumber(String trackingNumber);
+    Parcel getParcel(Long id);
 
-    Parcel getById(long id);
+    List<Parcel> getAllParcels();
 }
