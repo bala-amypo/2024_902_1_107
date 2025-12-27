@@ -17,57 +17,58 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(
-            CustomUserDetailsService userDetailsService,
-            JwtAuthenticationFilter jwtAuthenticationFilter) {
+            public SecurityConfig(
+                        CustomUserDetailsService userDetailsService,
+                                    JwtAuthenticationFilter jwtAuthenticationFilter) {
 
-        this.userDetailsService = userDetailsService;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
+                                            this.userDetailsService = userDetailsService;
+                                                    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+                                                        }
 
-    // ================= SECURITY FILTER CHAIN =================
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                                                            // ================= SECURITY FILTER CHAIN =================
+                                                                @Bean
+                                                                    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(
-                    jwtAuthenticationFilter,
-                    UsernamePasswordAuthenticationFilter.class
-            );
+                                                                            http
+                                                                                        .csrf(csrf -> csrf.disable())
+                                                                                                    .sessionManagement(session ->
+                                                                                                                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                                                                                                                    .authorizeHttpRequests(auth -> auth
+                                                                                                                                                        .requestMatchers("/auth/**").permitAll()
+                                                                                                                                                                            .anyRequest().authenticated()
+                                                                                                                                                                                        )
+                                                                                                                                                                                                    .authenticationProvider(authenticationProvider())
+                                                                                                                                                                                                                .addFilterBefore(
+                                                                                                                                                                                                                                    jwtAuthenticationFilter,
+                                                                                                                                                                                                                                                        UsernamePasswordAuthenticationFilter.class
+                                                                                                                                                                                                                                                                    );
 
-        return http.build();
-    }
+                                                                                                                                                                                                                                                                            return http.build();
+                                                                                                                                                                                                                                                                                }
 
-    // ================= AUTH PROVIDER =================
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
+                                                                                                                                                                                                                                                                                    // ================= AUTH PROVIDER =================
+                                                                                                                                                                                                                                                                                        @Bean
+                                                                                                                                                                                                                                                                                            public AuthenticationProvider authenticationProvider() {
 
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
+                                                                                                                                                                                                                                                                                                    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+                                                                                                                                                                                                                                                                                                            provider.setUserDetailsService(userDetailsService);
+                                                                                                                                                                                                                                                                                                                    provider.setPasswordEncoder(passwordEncoder());
+                                                                                                                                                                                                                                                                                                                            return provider;
+                                                                                                                                                                                                                                                                                                                                }
 
-    // ================= AUTH MANAGER =================
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+                                                                                                                                                                                                                                                                                                                                    // ================= AUTH MANAGER =================
+                                                                                                                                                                                                                                                                                                                                        @Bean
+                                                                                                                                                                                                                                                                                                                                            public AuthenticationManager authenticationManager(
+                                                                                                                                                                                                                                                                                                                                                        AuthenticationConfiguration config) throws Exception {
+                                                                                                                                                                                                                                                                                                                                                                return config.getAuthenticationManager();
+                                                                                                                                                                                                                                                                                                                                                                    }
 
-    // ================= PASSWORD ENCODER =================
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-}
+                                                                                                                                                                                                                                                                                                                                                                        // ================= PASSWORD ENCODER =================
+                                                                                                                                                                                                                                                                                                                                                                            @Bean
+                                                                                                                                                                                                                                                                                                                                                                                public PasswordEncoder passwordEncoder() {
+                                                                                                                                                                                                                                                                                                                                                                                        return new BCryptPasswordEncoder();
+                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                            
