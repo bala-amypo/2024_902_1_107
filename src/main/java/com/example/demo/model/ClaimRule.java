@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class ClaimRule {
@@ -9,21 +12,35 @@ public class ClaimRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String ruleName;
-    private String expression;
+    private String keyword;
     private double weight;
 
-    public ClaimRule() {}
-
-    public ClaimRule(String ruleName, String expression, double weight) {
-        this.ruleName = ruleName;
-        this.expression = expression;
-        this.weight = weight;
+    // No-arg constructor
+    public ClaimRule() {
     }
 
-    public String getRuleName() { return ruleName; }
-    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-    public String getExpression() { return expression; }
-    public double getWeight() { return weight; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 }
