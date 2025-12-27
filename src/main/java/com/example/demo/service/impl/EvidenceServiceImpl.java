@@ -13,30 +13,27 @@ import java.util.List;
 @Service
 public class EvidenceServiceImpl implements EvidenceService {
 
-    private final EvidenceRepository evidenceRepository;
-    private final DamageClaimRepository damageClaimRepository;
+    private final EvidenceRepository evidenceRepo;
+    private final DamageClaimRepository claimRepo;
 
     public EvidenceServiceImpl(
-            EvidenceRepository evidenceRepository,
-            DamageClaimRepository damageClaimRepository) {
-
-        this.evidenceRepository = evidenceRepository;
-        this.damageClaimRepository = damageClaimRepository;
+            EvidenceRepository evidenceRepo,
+            DamageClaimRepository claimRepo) {
+        this.evidenceRepo = evidenceRepo;
+        this.claimRepo = claimRepo;
     }
 
     @Override
-    public Evidence addEvidence(Long claimId, Evidence evidence) {
+    public Evidence uploadEvidence(long claimId, Evidence e) {
+        DamageClaim c = claimRepo.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
 
-        DamageClaim claim = damageClaimRepository.findById(claimId)
-                .orElseThrow(() ->
-                        new RuntimeException("DamageClaim not found"));
-
-        evidence.setClaim(claim);
-        return evidenceRepository.save(evidence);
+        e.setClaim(c);
+        return evidenceRepo.save(e);
     }
 
     @Override
-    public List<Evidence> getEvidenceByClaim(Long claimId) {
-        return evidenceRepository.findByClaim_Id(claimId);
+    public List<Evidence> getEvidenceForClaim(long claimId) {
+        return evidenceRepo.findByClaim_Id(claimId);
     }
 }

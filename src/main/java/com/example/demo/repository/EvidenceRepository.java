@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
 
-    List<Evidence> findByClaim_Id(Long claimId);
+    List<Evidence> findByClaim_Id(long claimId);
+
+    long countByClaim_Id(long claimId);
 }
