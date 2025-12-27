@@ -1,18 +1,26 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Parcel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String trackingNumber;
     private String senderName;
     private String receiverName;
     private double weightKg;
+
     private LocalDateTime deliveredAt;
 
+    // ✅ REQUIRED: Default constructor
     public Parcel() {}
 
+    // ✅ REQUIRED: Parameterized constructor (used in tests)
     public Parcel(String trackingNumber, String senderName, String receiverName, double weightKg) {
         this.trackingNumber = trackingNumber;
         this.senderName = senderName;
@@ -20,7 +28,7 @@ public class Parcel {
         this.weightKg = weightKg;
     }
 
-    // getters & setters
+    // ===== Getters & Setters =====
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
