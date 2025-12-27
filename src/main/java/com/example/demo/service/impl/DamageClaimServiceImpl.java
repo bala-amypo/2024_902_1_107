@@ -17,59 +17,47 @@ import java.util.List;
 @Service
 public class DamageClaimServiceImpl implements DamageClaimService {
 
-    private final DamageClaimRepository damageClaimRepository;
-    private final ParcelRepository parcelRepository;
-    private final ClaimRuleRepository claimRuleRepository;
+    private final ParcelRepository parcelRepo;
+    private final DamageClaimRepository claimRepo;
+    private final ClaimRuleRepository ruleRepo;
 
     public DamageClaimServiceImpl(
-            DamageClaimRepository damageClaimRepository,
-            ParcelRepository parcelRepository,
-            ClaimRuleRepository claimRuleRepository) {
-
-        this.damageClaimRepository = damageClaimRepository;
-        this.parcelRepository = parcelRepository;
-        this.claimRuleRepository = claimRuleRepository;
+            ParcelRepository parcelRepo,
+            DamageClaimRepository claimRepo,
+            ClaimRuleRepository ruleRepo) {
+        this.parcelRepo = parcelRepo;
+        this.claimRepo = claimRepo;
+        this.ruleRepo = ruleRepo;
     }
 
-    // ================= CREATE CLAIM =================
     @Override
-    public DamageClaim createClaim(Long parcelId, DamageClaim claim) {
+    public DamageClaim fileClaim(long parcelId, DamageClaim c) {
+        Parcel p = parcelRepo.findById(parcelId)
+                .orElseThrow(() -> new RuntimeException("Parcel not found"));
 
-        Parcel parcel = parcelRepository.findById(parcelId)
-                .orElseThrow(() -> new ResourceNotFoundException("Parcel not found"));
+        c.setParcel(p);
+        c.setStatus("PENDING");
+        return claimRepo.save(c);
+    }
 
-        claim.setParcel(parcel);
-        claim.setStatus("PENDING");
-
-        List<ClaimRule> rules = claimRuleRepository.findAll();
+    @Override
+    public DamageClaim evaluateClaim(long claimId) {
+        DamageClaim c = claimRepo.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
 
         double score = RuleEngineUtil.computeScore(
-                claim.getClaimDescription(), rules);
+                c.getClaimDescription(),
+                ruleRepo.findAll()
+        );
 
-        claim.setScore(score);
-
-        rules.forEach(rule ->
-                claim.getAppliedRules().add(rule.getKeyword()));
-
-        if (score > 5) {
-            claim.setStatus("APPROVED");
-        } else {
-            claim.setStatus("REJECTED");
-        }
-
-        return damageClaimRepository.save(claim);
+        c.setScore(score);
+        c.setStatus(score > 0.9 ? "APPROVED" : "REJECTED");
+        return claimRepo.save(c);
     }
 
-    // ================= GET CLAIM BY ID =================
     @Override
-    public DamageClaim getClaim(Long id) {
-        return damageClaimRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Damage claim not found"));
-    }
-
-    // ================= GET ALL CLAIMS =================
-    @Override
-    public List<DamageClaim> getAllClaims() {
-        return damageClaimRepository.findAll();
+    public DamageClaim getClaim(long claimId) {
+        return claimRepo.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
     }
 }

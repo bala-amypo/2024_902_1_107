@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface DamageClaimService {
 
-    DamageClaim createClaim(Long parcelId, DamageClaim claim);
+    DamageClaim fileClaim(long parcelId, DamageClaim claim);
 
-    DamageClaim getClaim(Long id);
+    DamageClaim evaluateClaim(long claimId);
 
-    List<DamageClaim> getAllClaims();
+    DamageClaim getClaim(long claimId);
 }

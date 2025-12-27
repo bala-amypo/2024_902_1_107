@@ -9,24 +9,21 @@ public class Evidence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fileName;
+    private String fileUrl;
+
+    private LocalDateTime uploadedAt;
 
     @ManyToOne
     private DamageClaim claim;
 
-    public Evidence() {}
-
-    public Evidence(Long id, String fileName, DamageClaim claim) {
-        this.id = id;
-        this.fileName = fileName;
-        this.claim = claim;
+    public Evidence() {
+        this.uploadedAt = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getFileUrl() { return fileUrl; }
+    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
 
-    public String getFileName() { return fileName; }
-    public void setFileName(String fileName) { this.fileName = fileName; }
+    public LocalDateTime getUploadedAt() { return uploadedAt; }
 
     public DamageClaim getClaim() { return claim; }
     public void setClaim(DamageClaim claim) { this.claim = claim; }
