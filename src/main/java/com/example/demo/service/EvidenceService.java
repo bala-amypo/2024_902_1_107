@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface EvidenceService {
 
-    Evidence addEvidence(Long claimId, Evidence evidence);
+    Evidence uploadEvidence(long claimId, Evidence evidence);
 
-    List<Evidence> getEvidenceByClaim(Long claimId);
+    Evidence uploadVideo(long claimId);
+
+    List<Evidence> getEvidenceForClaim(long claimId);
 }
