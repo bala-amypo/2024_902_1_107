@@ -1,27 +1,33 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
+@Entity
 public class Evidence {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private DamageClaim claim;
-    private String fileUrl;
-    private LocalDateTime uploadedAt;
 
-    public Evidence() {
-        this.uploadedAt = LocalDateTime.now(); // REQUIRED
+    private String fileName;
+
+    @ManyToOne
+    private DamageClaim claim;
+
+    public Evidence() {}
+
+    public Evidence(Long id, String fileName, DamageClaim claim) {
+        this.id = id;
+        this.fileName = fileName;
+        this.claim = claim;
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    public String getFileName() { return fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
+
     public DamageClaim getClaim() { return claim; }
     public void setClaim(DamageClaim claim) { this.claim = claim; }
-
-    public String getFileUrl() { return fileUrl; }
-    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
-
-    public LocalDateTime getUploadedAt() { return uploadedAt; }
 }
