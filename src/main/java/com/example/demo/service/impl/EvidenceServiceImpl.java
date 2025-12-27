@@ -36,4 +36,6 @@ public class EvidenceServiceImpl implements EvidenceService {
     public List<Evidence> getEvidenceForClaim(long claimId) {
         return evidenceRepo.findByClaim_Id(claimId);
     }
+
+    
 }
