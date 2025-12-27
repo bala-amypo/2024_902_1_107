@@ -7,5 +7,7 @@ public interface DamageClaimService {
 
     DamageClaim createClaim(Long parcelId, DamageClaim claim);
 
+    DamageClaim getClaim(Long claimId);
+
     List<DamageClaim> getAllClaims();
 }

@@ -31,6 +31,12 @@ public class DamageClaimServiceImpl implements DamageClaimService {
     }
 
     @Override
+    public DamageClaim getClaim(Long claimId) {
+        return claimRepo.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
+    }
+
+    @Override
     public List<DamageClaim> getAllClaims() {
         return claimRepo.findAll();
     }
