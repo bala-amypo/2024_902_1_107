@@ -9,38 +9,20 @@ import jakarta.persistence.Id;
 public class ClaimRule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    private String keyword;
+    private String ruleName;
+    private String expression;
     private double weight;
 
-    // No-arg constructor
-    public ClaimRule() {
-    }
+    public ClaimRule() {}
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
+    public ClaimRule(String ruleName, String expression, double weight) {
+        this.ruleName = ruleName;
+        this.expression = expression;
         this.weight = weight;
     }
+
+    // getters & setters
 }
