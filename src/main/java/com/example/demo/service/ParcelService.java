@@ -5,8 +5,9 @@ import java.util.List;
 
 public interface ParcelService {
 
-    Parcel addParcel(Parcel parcel);
+    Parcel createParcel(Parcel parcel);
 
-    Parcel getByTrackingNumber(String trackingNumber);
+    Parcel getParcel(Long id);
+
+    List<Parcel> getAllParcels();
 }
-
