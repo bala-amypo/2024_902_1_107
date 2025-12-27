@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class ClaimRule {
@@ -13,16 +10,20 @@ public class ClaimRule {
     private Long id;
 
     private String ruleName;
-    private String expression;
+    private String conditionExpression;
     private double weight;
 
     public ClaimRule() {}
 
-    public ClaimRule(String ruleName, String expression, double weight) {
+    public ClaimRule(String ruleName, String conditionExpression, double weight) {
         this.ruleName = ruleName;
-        this.expression = expression;
+        this.conditionExpression = conditionExpression;
         this.weight = weight;
     }
 
-    // getters & setters
+    public String getRuleName() { return ruleName; }
+    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+
+    public String getConditionExpression() { return conditionExpression; }
+    public double getWeight() { return weight; }
 }

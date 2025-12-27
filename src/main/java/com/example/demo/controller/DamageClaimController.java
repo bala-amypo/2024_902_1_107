@@ -2,39 +2,32 @@ package com.example.demo.controller;
 
 import com.example.demo.model.DamageClaim;
 import com.example.demo.service.DamageClaimService;
-
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/claims")
+@RequestMapping("/api/claims")
 public class DamageClaimController {
 
-    private final DamageClaimService claimService;
+    private final DamageClaimService damageClaimService;
 
-    public DamageClaimController(DamageClaimService claimService) {
-        this.claimService = claimService;
+    public DamageClaimController(DamageClaimService damageClaimService) {
+        this.damageClaimService = damageClaimService;
     }
 
-    // ================= FILE A CLAIM =================
     @PostMapping("/file/{parcelId}")
     public DamageClaim fileClaim(
             @PathVariable Long parcelId,
             @RequestBody DamageClaim claim) {
-
-        return claimService.createClaim(parcelId, claim);
+        return damageClaimService.fileClaim(parcelId, claim);
     }
 
-    // ================= GET CLAIM BY ID =================
-    @GetMapping("/{id}")
-    public DamageClaim getClaim(@PathVariable Long id) {
-        return claimService.getClaim(id);
+    @PutMapping("/evaluate/{claimId}")
+    public DamageClaim evaluateClaim(@PathVariable Long claimId) {
+        return damageClaimService.evaluateClaim(claimId);
     }
 
-    // ================= GET ALL CLAIMS =================
-    @GetMapping
-    public List<DamageClaim> getAllClaims() {
-        return claimService.getAllClaims();
+    @GetMapping("/{claimId}")
+    public DamageClaim getClaim(@PathVariable Long claimId) {
+        return damageClaimService.getClaim(claimId);
     }
 }
