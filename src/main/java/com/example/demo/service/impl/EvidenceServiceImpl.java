@@ -1,9 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.DamageClaim;
-import com.example.demo.model.Evidence;
-import com.example.demo.repository.DamageClaimRepository;
-import com.example.demo.repository.EvidenceRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.EvidenceService;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +20,16 @@ public class EvidenceServiceImpl implements EvidenceService {
     }
 
     @Override
-    public Evidence addEvidence(Long claimId, Evidence e) {
-        DamageClaim c = claimRepo.findById(claimId)
+    public Evidence uploadEvidence(Long claimId, Evidence evidence) {
+        DamageClaim claim = claimRepo.findById(claimId)
                 .orElseThrow(() -> new RuntimeException("Claim not found"));
 
-        e.setClaim(c);
-        return evidenceRepo.save(e);
+        evidence.setClaim(claim);
+        return evidenceRepo.save(evidence);
     }
 
     @Override
-    public List<Evidence> getEvidenceByClaim(Long claimId) {
+    public List<Evidence> getEvidenceForClaim(Long claimId) {
         return evidenceRepo.findByClaim_Id(claimId);
     }
 }
