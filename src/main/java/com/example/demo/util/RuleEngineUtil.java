@@ -4,26 +4,23 @@ import com.example.demo.model.ClaimRule;
 import java.util.List;
 
 public class RuleEngineUtil {
+    public static double computeScore(String description, List<ClaimRule> rules) {
+        if (description == null || rules == null || rules.isEmpty()) return 0.0;
 
-    public static double computeScore(String text, List<ClaimRule> rules) {
+        double score = 0;
+        for (ClaimRule rule : rules) {
+            if (rule.getWeight() <= 0) continue;
 
-        if (text == null || rules == null || rules.isEmpty()) return 0.0;
-
-        double score = 0.0;
-        String lower = text.toLowerCase();
-
-        for (ClaimRule r : rules) {
-
-            if (r.getExpression() == null) continue;
-
-            if (r.getExpression().equalsIgnoreCase("always")) {
-                score += r.getWeight();
-            }
-            else if (r.getExpression().startsWith("description_contains:")) {
-                String key = r.getExpression().split(":")[1].toLowerCase();
-                if (lower.contains(key)) score += r.getWeight();
+            String expr = rule.getConditionExpression();
+            if ("always".equalsIgnoreCase(expr)) {
+                score += rule.getWeight();
+            } else if (expr != null && expr.startsWith("description_contains:")) {
+                String keyword = expr.split(":")[1].toLowerCase();
+                if (description.toLowerCase().contains(keyword)) {
+                    score += rule.getWeight();
+                }
             }
         }
-        return score;
+        return Math.min(score, 1.0);
     }
 }
