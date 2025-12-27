@@ -13,7 +13,7 @@ public class RuleEngineUtil {
         }
 
         for (ClaimRule rule : rules) {
-            if (text.contains(rule.getKeyword())) {
+            if (rule.getKeyword() != null && text.contains(rule.getKeyword())) {
                 score += rule.getWeight();
             }
         }
