@@ -1,77 +1,38 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
 public class DamageClaim {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String claimDescription;
-
-    private double score;
-
-    private String status;
-
-    @ManyToOne
     private Parcel parcel;
+    private String claimDescription;
+    private String status;
+    private Double score;
+    private Set<ClaimRule> appliedRules;
 
-    @ElementCollection
-    private List<String> appliedRules = new ArrayList<>();
-
-    public DamageClaim() {}
-
-    // ===== GETTERS =====
-    public Long getId() {
-        return id;
+    public DamageClaim() {
+        this.status = "PENDING";                 // REQUIRED
+        this.appliedRules = new HashSet<>();     // REQUIRED
+        this.score = null;                       // MUST BE NULL
     }
 
-    public String getClaimDescription() {
-        return claimDescription;
-    }
+    // getters & setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public double getScore() {
-        return score;
-    }
+    public Parcel getParcel() { return parcel; }
+    public void setParcel(Parcel parcel) { this.parcel = parcel; }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getClaimDescription() { return claimDescription; }
+    public void setClaimDescription(String claimDescription) { this.claimDescription = claimDescription; }
 
-    public Parcel getParcel() {
-        return parcel;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public List<String> getAppliedRules() {
-        return appliedRules;
-    }
+    public Double getScore() { return score; }
+    public void setScore(Double score) { this.score = score; }
 
-    // ===== SETTERS =====
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setClaimDescription(String claimDescription) {
-        this.claimDescription = claimDescription;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setParcel(Parcel parcel) {
-        this.parcel = parcel;
-    }
-
-    public void setAppliedRules(List<String> appliedRules) {
-        this.appliedRules = appliedRules;
-    }
+    public Set<ClaimRule> getAppliedRules() { return appliedRules; }
 }
