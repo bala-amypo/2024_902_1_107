@@ -3,7 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.DamageClaim;
 import java.util.List;
 
-public interface ClaimRuleService {
-    ClaimRule addRule(ClaimRule rule);
-    List<ClaimRule> getAllRules();
+public interface ClaimService {
+    DamageClaim getClaim(Long id);
+    DamageClaim evaluateClaim(Long id);
+    List<DamageClaim> findAll();
 }
